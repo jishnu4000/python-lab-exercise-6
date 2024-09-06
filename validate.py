@@ -25,13 +25,10 @@ def validate_date(date):
     return True
   return False
 
-def get_payment(choice):
-  if choice == 1:
-    return 'Credit Card'
-  elif choice == 2:
-    return 'Debit Card'
-  elif choice == 3:
-    return 'Net Banking'
+def validate_payment(payMethod):
+  if re.match(r'^credit$|^debit$|^netbanking$', payMethod):
+    return True
+  return False
 
 if __name__ == '__main__':
   print('\nWelcome to Travel Booking System')
@@ -53,29 +50,29 @@ if __name__ == '__main__':
       phone_no = input('Enter phone number: ')
       while not validate_phone_number(phone_no):
         phone_no = input('Enter a valid phone number with 10 digits: ')
+
+      email = input('Enter email: ')
+      while not validate_email(email):
+        email = input('Enter a valid email address: ')
       
       booking_date = input('Enter booking date in DD/MM/YYYY format: ')
       while not validate_date(booking_date):
         booking_date = input('Enter a valid date in the DD/MM/YYYY format: ')
       
-      print('Choose a payment method.')
-      print('1. Credit Card')
-      print('2. Debit Card')
-      print('3. Netbanking')
-      payment_choice = int(input('Enter the payment method: '))
-      while payment_choice not in [1, 2, 3]:
-        payment_choice = int(input('Invalid choice. Please enter 1, 2 or 3: '))
-      payment_method = get_payment(payment_choice)
+      payment_method = input('Enter the payment method (credit, debit, netbanking): ')
+      while not validate_payment(payment_method):
+        payment_method = input('Enter a valid payment method (credit, debit, netbanking): ')
       
       print('\nFinal Booking Details')
-      print('-----------------------')
-      print('Name:', name)
-      print('Passport Number:', passport_number)
-      print('Phone Number:', phone_no)
-      print('Booking Date:', booking_date)
-      print('Payment Method: ', payment_method)
+      print('--------------------------')
+      print('Name: ', name)
+      print('Passport Number: ', passport_number)
+      print('Phone Number: ', phone_no)
+      print('Email: ', email)
+      print('Booking Date: ', booking_date)
+      print('Payment Method: ', payment_method.title())
 
     if choice == 'n':
       print('Closed')
       break
-
+ 
